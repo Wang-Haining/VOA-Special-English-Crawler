@@ -143,9 +143,7 @@ def crawler(outputdir):
 def main():
 
     parser = argparse.ArgumentParser(description="Let's crawl VOA Special English.")
-    parser.add_argument('-o',
-                        action='store',
-                        help='Path to output directory')
+    parser.add_argument('-o', action='store', help='Path to output directory')
     args = vars(parser.parse_args())
 
     outputdir = args['o']
