@@ -8,4 +8,4 @@ I use "article" instead of "news" to describe the website content URLs pointing 
 
 To start the crawler, install it and make sure all its dependencies are installed as well; then run the software using the following command:
 
-python3 crawler.py -i -o <output-path + XXX.json>
+python3 crawler.py -o <output-path + XXX.json>
