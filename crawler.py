@@ -107,7 +107,7 @@ def output_handler(result, outputdir):
 
 
 
-def crawler(outputdir):
+def crawler():
 
     candidate_dates = candidate_date_handler()
     # nothing_dates document dates pages that redirect the scrawler
@@ -151,6 +151,10 @@ def main():
     results = crawler()
     # here, I won't output the redirections, they are stored in results[1]
     output_handler(popnull_and_sort(results[0]), outputdir)
+
+if __name__ == "__main__":
+
+    main()
 
 
 
