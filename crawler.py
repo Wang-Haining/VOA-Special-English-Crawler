@@ -72,6 +72,9 @@ def candidate_date_handler():
 
 def popnull_and_sort(result):
     # "result" is a list of dicts
+    for dict in result:
+        if dict == {}:
+            result.remove(dict)
     # pop out dicts have a vacant list as value
     result = [i for i in result if list(i.values())[0] != []]
 
@@ -81,7 +84,7 @@ def popnull_and_sort(result):
 
     for dict in result:
         formatting = ''
-        formatting = re.match(r'(\d{4})(\d{2})(\d{2})', list(dict.keys())[0])
+        formatting = re.match(r'(\d{4})(\d+)(\d+)', list(dict.keys())[0])
         yy = formatting.group(1)
         mm = formatting.group(2)
         dd = formatting.group(3)
@@ -102,7 +105,7 @@ def output_handler(result, outputdir):
 
     """
     output = json.dumps(result)
-    with open(outputdir, 'w') as f:
+    with open(outputdir, 'a') as f:
         json.dump(output, f)
 
 
@@ -149,7 +152,7 @@ def main():
     outputdir = args['o']
 
     results = crawler()
-    # here, I won't output the redirections, they are stored in results[1]
+    # here, I won't print the redirections, they are stored in results[1]
     output_handler(popnull_and_sort(results[0]), outputdir)
 
 if __name__ == "__main__":
