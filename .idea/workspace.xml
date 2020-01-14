@@ -2,9 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ca05140d-33d0-4ae8-a1db-6a6b4982787a" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/VOA-Special-English-Crawler.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/VOA-Special-English-Crawler.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/crawler.py" beforeDir="false" afterPath="$PROJECT_DIR$/crawler.py" afterDir="false" />
     </list>
@@ -96,7 +93,9 @@
       <workItem from="1578874324899" duration="2578000" />
       <workItem from="1578876910862" duration="220000" />
       <workItem from="1578877246927" duration="1830000" />
-      <workItem from="1578883991671" duration="1415000" />
+      <workItem from="1578883991671" duration="1945000" />
+      <workItem from="1578954964806" duration="602000" />
+      <workItem from="1578975939818" duration="1001000" />
     </task>
     <servers />
   </component>
@@ -104,10 +103,10 @@
     <option name="version" value="1" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="-1647" y="-51" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1578874819786">
+    <state x="-1647" y="-51" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1578955179235">
       <screen x="-1920" y="-280" width="1920" height="1080" />
     </state>
-    <state x="-1647" y="-51" key="#com.intellij.execution.impl.EditConfigurationsDialog/-1920.-280.1920.1080/0.0.1280.800@-1920.-280.1920.1080" timestamp="1578874819786" />
+    <state x="-1647" y="-51" key="#com.intellij.execution.impl.EditConfigurationsDialog/-1920.-280.1920.1080/0.0.1280.800@-1920.-280.1920.1080" timestamp="1578955179235" />
     <state x="-1173" y="-28" key="#com.intellij.ide.macro.MacrosDialog" timestamp="1578874358977">
       <screen x="-1920" y="-280" width="1920" height="1080" />
     </state>

@@ -3,7 +3,6 @@
 hw56@iu.edu
 """
 
-
 from bs4 import BeautifulSoup
 import urllib.request
 from urllib.request import urlopen
@@ -14,6 +13,8 @@ import random
 import json
 import argparse
 from datetime import datetime
+
+OUTPUTDIR = "./"
 
 
 def check_redirect(url):
@@ -35,9 +36,10 @@ def ymd2mdy(ymd):
     y = inter.group(1)
     m = inter.group(2)
     d = inter.group(3)
-    m_reference = dict([('1','January'), ('2','February'), ('3','March'), ('4', 'April'), ('5', 'May'), ('6', 'June'),
-                        ('7', 'July'), ('8', 'August'), ('9', 'September'), ('10', 'October'), ('11', 'November'),
-                        ('12', 'December')])
+    m_reference = dict(
+        [('1', 'January'), ('2', 'February'), ('3', 'March'), ('4', 'April'), ('5', 'May'), ('6', 'June'),
+         ('7', 'July'), ('8', 'August'), ('9', 'September'), ('10', 'October'), ('11', 'November'),
+         ('12', 'December')])
     m_n = m_reference[m]
     if len(d) == 1:
         d = '0' + d
@@ -61,9 +63,10 @@ def candidate_date_handler():
     leap_dates = []
     candidate_dates = list(
         sre_yield.AllStrings(
-        r'(1959|19[6-9]\d|200\d|201[0-8])/(([1-9]|1[0-2])/([1-9]|1[0-9]|2[0-8])|([13-9]|1[0-2])/(29|30)|([13578]|1[02])/31)'))
-    leap_years = ['1960', '1964', '1968', '1972', '1976', '1980','1984', '1988', '1992', '1996', '2000', '2004', '2008',
-     '2012', '2016']
+            r'(1959|19[6-9]\d|200\d|201[0-8])/(([1-9]|1[0-2])/([1-9]|1[0-9]|2[0-8])|([13-9]|1[0-2])/(29|30)|([13578]|1[02])/31)'))
+    leap_years = ['1960', '1964', '1968', '1972', '1976', '1980', '1984', '1988', '1992', '1996', '2000', '2004',
+                  '2008',
+                  '2012', '2016']
     leap_dates = [year + '/2/29' for year in leap_years]
     candidate_dates += leap_dates
 
@@ -75,6 +78,8 @@ def popnull_and_sort(result):
     for dict in result:
         if dict == {}:
             result.remove(dict)
+        if dict is None:
+            result.remove(dict)
     # pop out dicts have a vacant list as value
     result = [i for i in result if list(i.values())[0] != []]
 
@@ -82,37 +87,45 @@ def popnull_and_sort(result):
     # befor sorting, let paddle yyyy(m)m(d)d with zeros
     # transfer candidate_date to standard yyyy/mm/dd format
 
+    # use "log" to keep track of possible errors
+    error_log = []
     for dict in result:
         formatting = ''
-        formatting = re.match(r'(\d{4})(\d+)(\d+)', list(dict.keys())[0])
-        yy = formatting.group(1)
-        mm = formatting.group(2)
-        dd = formatting.group(3)
-        if len(mm) == 1:
-            mm = '0' + mm
-        if len(dd) == 1:
-            dd = '0' + dd
-        normalized = yy + "/" + mm + "/" + dd
-        dict[normalized] = dict.pop(list(dict.keys())[0])
+        try:
+            formatting = re.match(r'(\d{4})/(\d+)/(\d+)', list(dict.keys())[0])
+            yy = formatting.group(1)
+            mm = formatting.group(2)
+            dd = formatting.group(3)
+            if len(mm) == 1:
+                mm = '0' + mm
+            if len(dd) == 1:
+                dd = '0' + dd
+            normalized = yy + "/" + mm + "/" + dd
+            dict[normalized] = dict.pop(list(dict.keys())[0])
+        except:
+            error_log.append(dict)
 
     result.sort(key=lambda x: datetime.strptime(list(x.keys())[0], "%Y/%m/%d").timestamp())
+
+    #store error_log as a .json
+    log = json.dumps(error_log)
+    with open(OUTPUTDIR + "error_log.json", 'a') as f:
+        json.dump(log, f)
 
     return result
 
 
-def output_handler(result, outputdir):
+def output_handler(result):
     """
 
     """
     output = json.dumps(result)
-    with open(outputdir, 'a') as f:
+    with open(OUTPUTDIR + "URLs.json", 'a') as f:
         json.dump(output, f)
 
 
+def crawler(candidate_dates):
 
-def crawler():
-
-    candidate_dates = candidate_date_handler()
     # nothing_dates document dates pages that redirect the scrawler
     # ("Sorry! No content for XXX. See content from before")
     nothing_dates = []
@@ -140,28 +153,25 @@ def crawler():
         else:
             nothing_dates.append({candidate_date: [url_send, url_detect]})
 
-    return [targets, nothing_dates]
+    # store nothing_dates
+    nothing = json.dumps(nothing_dates)
+    with open(OUTPUTDIR + "nothing_dates.json", 'a') as f:
+        json.dump(nothing, f)
+
+    return targets
 
 
 def main():
-
-    parser = argparse.ArgumentParser(description="Let's crawl VOA Special English.")
-    parser.add_argument('-o', action='store', help='Path to output directory')
-    args = vars(parser.parse_args())
-
-    outputdir = args['o']
-
-    results = crawler()
+    # parser = argparse.ArgumentParser(description="Let's crawl VOA Special English.")
+    # parser.add_argument('-o', action='store', help='Path to output directory')
+    # args = vars(parser.parse_args())
+    #
+    # outputdir = args['o']
+    candidate_dates = candidate_date_handler()
+    targets = crawler(candidate_dates)
     # here, I won't print the redirections, they are stored in results[1]
-    output_handler(popnull_and_sort(results[0]), outputdir)
+    output_handler(popnull_and_sort(targets))
+
 
 if __name__ == "__main__":
-
     main()
-
-
-
-
-
-
-
