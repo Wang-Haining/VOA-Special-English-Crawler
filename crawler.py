@@ -134,7 +134,7 @@ def crawler(candidate_dates):
     targets = []
 
     for candidate_date in candidate_dates:
-        time.sleep(random.randint(0, 3))
+        time.sleep(random.randint(0, 1))
         url_send = 'https://learningenglish.voanews.com/z/952/' + candidate_date
         url_detect = check_redirect(url_send)
         if url_send == url_detect:
