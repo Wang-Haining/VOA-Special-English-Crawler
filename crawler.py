@@ -15,9 +15,20 @@ import argparse
 from datetime import datetime
 
 OUTPUTDIR = "./"
+FILE_NAME = "URLs.json"
+DOMAIN = "https://learningenglish.voanews.com"
+AS_IT_IS = "/z/3521"
+ARTS_AND_CULTURE = "/z/986"
+AMERICAN_STORIES = "/z/1581"
+HEALTH_AND_LIFESTYLE = "/z/955"
+U_S_HISTORY = "/z/979"
+SCIENCE_AND_TECHNOLOGY = "/z/1579"
+WHATS_TRENDING_TODAY = "/z/4652"
+WORDS_AND_THEIR_STORIES = "/z/987"
+AMERICAS_PRESIDENTS = "/z/5091"
 
 
-def check_redirect(url):
+def check_redirection(url):
     """
     determine whether the website redirects my request
     """
@@ -63,7 +74,7 @@ def candidate_date_handler():
     leap_dates = []
     candidate_dates = list(
         sre_yield.AllStrings(
-            r'(1959|19[6-9]\d|200\d|201[0-8])/(([1-9]|1[0-2])/([1-9]|1[0-9]|2[0-8])|([13-9]|1[0-2])/(29|30)|([13578]|1[02])/31)'))
+            r'(200[1-9]]|201[0-9])/(([1-9]|1[0-2])/([1-9]|1[0-9]|2[0-8])|([13-9]|1[0-2])/(29|30)|([13578]|1[02])/31)'))
     leap_years = ['1960', '1964', '1968', '1972', '1976', '1980', '1984', '1988', '1992', '1996', '2000', '2004',
                   '2008',
                   '2012', '2016']
@@ -108,7 +119,7 @@ def popnull_and_sort(result):
     result.sort(key=lambda x: datetime.strptime(list(x.keys())[0], "%Y/%m/%d").timestamp())
 
     #store error_log as a .json
-    log = json.dumps(error_log)
+    log = json.dump(error_log)
     with open(OUTPUTDIR + "error_log.json", 'a') as f:
         json.dump(log, f)
 
@@ -119,8 +130,8 @@ def output_handler(result):
     """
 
     """
-    output = json.dumps(result)
-    with open(OUTPUTDIR + "URLs.json", 'a') as f:
+    output = json.dump(result)
+    with open(OUTPUTDIR + FILE_NAME, 'a') as f:
         json.dump(output, f)
 
 
@@ -136,7 +147,7 @@ def crawler(candidate_dates):
     for candidate_date in candidate_dates:
         time.sleep(random.randint(0, 1))
         url_send = 'https://learningenglish.voanews.com/z/952/' + candidate_date
-        url_detect = check_redirect(url_send)
+        url_detect = check_redirection(url_send)
         if url_send == url_detect:
             html = urlopen(url_send)
             soup = BeautifulSoup(html, 'lxml')
@@ -148,13 +159,14 @@ def crawler(candidate_dates):
             for anchor in anchors:
                 if anchor.get_text() == ymd2mdy(candidate_date):
                     d[candidate_date].append(anchor.parent.a.attrs['href'])
+
             targets.append(d)
 
         else:
             nothing_dates.append({candidate_date: [url_send, url_detect]})
 
     # store nothing_dates
-    nothing = json.dumps(nothing_dates)
+    nothing = json.dump(nothing_dates)
     with open(OUTPUTDIR + "nothing_dates.json", 'a') as f:
         json.dump(nothing, f)
 
