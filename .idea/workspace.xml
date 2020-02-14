@@ -1,13 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="ca05140d-33d0-4ae8-a1db-6a6b4982787a" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/URLs.json" beforeDir="false" afterPath="$PROJECT_DIR$/URLs.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/crawler.py" beforeDir="false" afterPath="$PROJECT_DIR$/crawler.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/error_log.json" beforeDir="false" afterPath="$PROJECT_DIR$/error_log.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/nothing_dates.json" beforeDir="false" />
-    </list>
+    <list default="true" id="ca05140d-33d0-4ae8-a1db-6a6b4982787a" name="Default Changelist" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -125,6 +119,7 @@
       <workItem from="1578954964806" duration="602000" />
       <workItem from="1578975939818" duration="15908000" />
       <workItem from="1579095124267" duration="14228000" />
+      <workItem from="1581693483096" duration="120000" />
     </task>
     <servers />
   </component>
@@ -136,7 +131,9 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="COLUMN_ORDER" />
+            </State>
           </value>
         </entry>
       </map>
